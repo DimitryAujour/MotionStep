@@ -9,7 +9,7 @@ export default function Header() {
                 <img classNmae ='ml-20'src={motion} alt="motion run letter logo" className="self-center" />
                 <h1 className="text-5xl px-6 pt-1 text-lightgreen">Want an easy way to get fit?</h1>
                 <p className="my-5 px-6 pb-4 text-2xl text-offwhite">
-                    Motion is there to help you see how many steps you need to get that nice summer body you crave!
+                    Motionstep is there to help you see how many steps you need to get that nice summer body you crave!
                 </p>
                 <button className="bg-lightgreen hover:bg-darkgreen text-offwhite font-bold py-2 px-4 rounded-full pb-4 mb-12">
                     Try the app!
