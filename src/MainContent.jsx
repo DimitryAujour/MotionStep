@@ -39,7 +39,7 @@ export default function MainContent() {
                 </div>
 
                 <div
-                    className='bg-white rounded-lg shadow-md p-6 text-center my-6 border-solid border-2 border-lightgreen'>
+                    className='bg-white rounded-lg shadow-md p-6 text-center mt-6 border-solid border-2 border-lightgreen'>
                     <div className='flex justify-center mb-4'>
                         <img src={phone} alt='Icon 1' className='h-12'/>
                     </div>
