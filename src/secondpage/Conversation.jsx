@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { analyzeImageWithChatGPT } from './chatgptAPI.js';
-import Loader from './Loader.jsx';
+import { analyzeImageWithChatGPT } from './chatgptAPI';
+import Loader from './Loader';
 
 export default function Conversation() {
     const [images, setImages] = useState([]);

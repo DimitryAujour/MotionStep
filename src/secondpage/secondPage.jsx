@@ -6,7 +6,7 @@ import Conversation from './Conversation';
 export default function SecondPage() {
     return (
         <>
-        <Header2/>
+            <Header2/>
             <Conversation/>
         </>
     );
