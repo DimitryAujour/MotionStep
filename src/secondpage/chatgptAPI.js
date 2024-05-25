@@ -10,6 +10,12 @@ export async function analyzeImageWithChatGPT(image) {
             try {
                 const response = await axios.post('/.netlify/functions/analyzeImage', { imageBase64: base64String });
 
+                console.log('Function Response:', response.data); // Debugging log
+
+                if (response.data.error) {
+                    throw new Error(response.data.error);
+                }
+
                 resolve(response.data);
             } catch (error) {
                 console.error('Failed to analyze image', error);
