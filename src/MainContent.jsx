@@ -3,6 +3,7 @@ import logo from './assets/logo.png';
 import money from './assets/money.png';
 import cursor from './assets/cursor.png';
 import phone from './assets/phone.png';
+import { motion } from 'framer-motion';
 
 
 
