@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { OpenAI } from 'openai';
 
-const apiKey = 'sk-proj-46PADS3XMsPmQVnXscZUT3BlbkFJ113WoDnEW5IfCJxOZlub'; // Replace with your actual API key
+const apiKey = process.env.openaikey;
 
 const openai = new OpenAI({
     apiKey: apiKey,
@@ -60,11 +60,23 @@ export async function analyzeImageWithChatGPT(image) {
 }
 
 function parseResponse(response) {
-    const calorieMatch = response.match(/(\d+)\s*calories/);
-    const stepsMatch = response.match(/(\d+)\s*steps/);
+    console.log('Parsing response:', response); // Debug logging
+
+    const calorieMatch = response.match(/(\d+)\s*calories?/i);
+    const stepsMatch = response.match(/(\d+)\s*steps?/i);
 
     const calories = calorieMatch ? parseInt(calorieMatch[1], 10) : 0;
-    const steps = stepsMatch ? parseInt(stepsMatch[1], 10) : 0;
+    let steps;
+
+    if (stepsMatch) {
+        steps = parseInt(stepsMatch[1], 10);
+    } else {
+        // Calculate steps based on calories
+        steps = Math.round(calories / 0.04);
+    }
+
+    console.log('Parsed calories:', calories); // Debug logging
+    console.log('Calculated steps:', steps); // Debug logging
 
     return { calories, steps };
 }
