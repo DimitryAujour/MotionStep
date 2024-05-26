@@ -20,11 +20,9 @@ exports.handler = async (event, context) => {
         const apiKey = process.env.OPENAIKEY;
         const visionApiUrl = 'https://api.openai.com/v1/chat/completions';
 
-        // Log received data
         console.log('Received imageBase64:', imageBase64.substring(0, 30)); // Only log part of the base64 string to avoid large logs
         console.log('Using API Key:', apiKey); // Debugging log
 
-        // Construct the payload for the API request
         const payload = {
             model: 'gpt-4-turbo',
             messages: [
@@ -45,7 +43,6 @@ exports.handler = async (event, context) => {
 
         console.log('Payload:', JSON.stringify(payload, null, 2)); // Debugging log
 
-        // Make the API request
         const response = await axios.post(visionApiUrl, payload, {
             headers: {
                 'Authorization': `Bearer ${apiKey}`,
@@ -55,7 +52,6 @@ exports.handler = async (event, context) => {
 
         console.log('API Response:', response.data); // Debugging log
 
-        // Parse the response
         const result = response.data.choices[0].message.content;
         const parsedResult = parseResponse(result);
 
@@ -74,11 +70,23 @@ exports.handler = async (event, context) => {
 };
 
 function parseResponse(response) {
-    const calorieMatch = response.match(/(\d+)\s*calories/);
-    const stepsMatch = response.match(/(\d+)\s*steps/);
+    console.log('Parsing response:', response); // Debug logging
+
+    const calorieMatch = response.match(/(\d+)\s*calories?/i);
+    const stepsMatch = response.match(/(\d+)\s*steps?/i);
 
     const calories = calorieMatch ? parseInt(calorieMatch[1], 10) : 0;
-    const steps = stepsMatch ? parseInt(stepsMatch[1], 10) : 0;
+    let steps;
+
+    if (stepsMatch) {
+        steps = parseInt(stepsMatch[1], 10);
+    } else {
+        // Calculate steps based on calories
+        steps = Math.round(calories / 0.04);
+    }
+
+    console.log('Parsed calories:', calories); // Debug logging
+    console.log('Calculated steps:', steps); // Debug logging
 
     return { calories, steps };
 }
