@@ -2,20 +2,21 @@ const axios = require('axios');
 
 exports.handler = async (event, context) => {
     try {
-        // Parse the request body
         if (!event.body) {
             console.error('No request body');
             throw new Error("No request body");
         }
 
-        const { imageBase64 } = JSON.parse(event.body);
+        const parsedBody = JSON.parse(event.body);
+        console.log('Parsed body:', parsedBody);
+
+        const { imageBase64 } = parsedBody;
 
         if (!imageBase64) {
             console.error('No imageBase64 provided');
             throw new Error("No imageBase64 provided");
         }
 
-        // OpenAI API key and URL
         const apiKey = process.env.OPENAIKEY;
         const visionApiUrl = 'https://api.openai.com/v1/chat/completions';
 
@@ -42,7 +43,7 @@ exports.handler = async (event, context) => {
             max_tokens: 300
         };
 
-        console.log('Payload:', payload); // Debugging log
+        console.log('Payload:', JSON.stringify(payload, null, 2)); // Debugging log
 
         // Make the API request
         const response = await axios.post(visionApiUrl, payload, {
